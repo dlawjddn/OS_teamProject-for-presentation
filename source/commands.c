@@ -1001,6 +1001,7 @@ char* deleteSpace(char* s){
 }
 
 void grep_v(char* findWord, char *findFile){
+    //printf("%s\n", findFile);
     FILE* fp = fopen(findFile, "rt");
     if(fp == NULL){
         printf("Can not Exist File!\n");
@@ -1036,6 +1037,7 @@ void grep_v(char* findWord, char *findFile){
 
 // ðÂÊ«?Öð ?ùì??
 void grep_i(char* findWord, char *findFile){
+    //printf("%s\n", findFile);
     FILE* fp = fopen(findFile, "rt");
     if(fp == NULL){
         printf("Can not Exist File!\n");
@@ -1250,8 +1252,18 @@ void pasingCommand(DirectoryTree* TreeDir, char* cmd)
             ls_a(TreeDir);
         else if (strcmp(str, "-l") == 0)
             ls_l(TreeDir);
-        else
+        else if (strcmp(str, "-al") == 0)
             ls_al(TreeDir);
+        else if(strcmp(str, "--help") == 0){
+            printf("사용법: ls [option]\n");
+            printf("  Show your list of file or directory.\n\n");
+            printf("  Options:\n");
+            printf("    -a : show your all files include hiding files\n");
+            printf("    -l : show your files with details\n");
+            printf("    -al: show your all files include hinding files with details \n");
+            printf("        --help\t 이 도움말을 표시하고 끝냅니다\n");
+        }
+        else printf("invailed option of ls please check your command\n");
     }
     else if (strcmp(str, "cat") == 0) {
         str = strtok(NULL, " ");
@@ -1286,10 +1298,10 @@ void pasingCommand(DirectoryTree* TreeDir, char* cmd)
         str = strtok(NULL, " ");
         str1 = strtok(NULL, " ");
         str2 = strtok(NULL, " ");
-        if (strcmp(str, "-n") == 0)
-            grep2(str1, str2);
-        else
-            grep(str, str1);
+        if (strcmp(str, "-n") == 0) grep2(str1, str2);
+        else if (strcmp(str, "-i") == 0) grep_i(str, str1);
+        else if (strcmp(str, "-v") == 0) grep_v(str, str1);
+        else grep(str, str1);
     }
     else if (strcmp(str, "clear") == 0) {
         system("clear");
