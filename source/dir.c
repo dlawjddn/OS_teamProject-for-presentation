@@ -231,7 +231,7 @@ DirectoryTree* DirLoad()
         NodeRead(TreeDir, tmp);
     }
 
-    //fclose(Dir);
+    fclose(Dir);
     TreeDir->current = TreeDir->root;
     return TreeDir;
 }
